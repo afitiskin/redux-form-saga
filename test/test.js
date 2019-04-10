@@ -135,7 +135,6 @@ describe('redux-saga-actions', () => {
 
         const failureResult = winner.failure && winner.failure.payload ? winner.failure.payload : winner.failure;
         const result = winner.success ? call(defer.resolve) : call(defer.reject, failureResult);
-        console.log();
         expect(iterator.next([winner]).value).to.deep.equal(result);
       }
     });

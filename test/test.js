@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import { PROMISE_ACTION, createAction, actionsWatcherSaga, handleActionSaga } from '../src';
 import { PROMISE, createFormAction, formActionSaga, handlePromiseSaga } from '../src';
-import { takeEvery, take, race, put, call } from 'redux-saga/effects';
+import { all, takeEvery, take, race, put, call } from 'redux-saga/effects';
 import { describe, beforeEach, it } from 'mocha';
 import { expect } from 'chai';
 import { isFSA } from 'flux-standard-action';
@@ -128,14 +128,13 @@ describe('redux-saga-actions', () => {
       });
 
       function run(winner) {
-        expect(iterator.next().value).to.deep.equal([
+        expect(iterator.next().value).to.deep.equal(all([
           race({ success: take(SUCCESS), failure: take(FAILURE) }),
           put(request),
-        ]);
+        ]));
 
         const failureResult = winner.failure && winner.failure.payload ? winner.failure.payload : winner.failure;
         const result = winner.success ? call(defer.resolve) : call(defer.reject, failureResult);
-
         expect(iterator.next([winner]).value).to.deep.equal(result);
       }
     });

@@ -24,11 +24,11 @@
     "eslint-plugin-babel": "^3.0.0",
     "flux-standard-action": "^0.6.0",
     "mocha": "^2.3.4",
-    "redux-saga": "^0.14.0",
+    "redux-saga": ">=0.15.0",
     "rimraf": "^2.5.4"
   },
   "peerDependencies": {
-    "redux-saga": ">=0.14.0"
+    "redux-saga": ">=0.15.0"
   },
   "repository": {
     "type": "git",

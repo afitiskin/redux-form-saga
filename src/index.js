@@ -1,4 +1,4 @@
-import { take, race, put, call, takeEvery } from 'redux-saga/effects';
+import { all, take, race, put, call, takeEvery } from 'redux-saga/effects';
 
 export const PROMISE_ACTION = '@@redux-saga-actions/PROMISE';
 
@@ -60,13 +60,13 @@ export function* handleActionSaga({ payload }) {
   const { resolve, reject } = defer;
   const [ SUCCESS, FAILURE ] = types;
 
-  const [ { success, failure } ] = yield [
+  const [ { success, failure } ] = yield all([
     race({
       success: take(SUCCESS),
       failure: take(FAILURE),
     }),
     put(request),
-  ];
+  ]);
 
   if (success) {
     yield call(resolve);

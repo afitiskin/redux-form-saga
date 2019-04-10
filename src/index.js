@@ -44,11 +44,11 @@ export function createAction(requestAction, types, payloadCreator = identity) {
     throw new Error('Must include two action types: [ SUCCESS, FAILURE ]');
   }
 
-  return Object.assign((data, dispatch) => {
+  return Object.assign((...args) => {
     return new Promise((resolve, reject) => {
-      dispatch(action({
+      args[1](action({
         types,
-        request: requestAction(data),
+        request: requestAction(...args),
         defer: { resolve, reject },
       }));
     });
